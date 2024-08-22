@@ -5,3 +5,22 @@ npm i elementPlus  // npm install element-plus --save --legacy-peer-deps
 npm install -D unplugin-vue-components unplugin-auto-import
 
 //安裝錯誤，搜尋到的解法 https://wenku.csdn.net/answer/45gmngb29c?ydreferer=aHR0cHM6Ly93d3cuZ29vZ2xlLmNvbS8%3D
+
+
+//.eslintrc.cjs
+/* eslint-env node */
+module.exports = {
+  root: true,
+  'extends': [
+    'plugin:vue/vue3-essential',
+    'eslint:recommended'
+  ],
+  parserOptions: {
+    ecmaVersion: 'latest'
+  },
+  rules:{
+    "vue/multi-word-component-names": ["error", {
+      "ignores": []
+    }]
+  }
+}
