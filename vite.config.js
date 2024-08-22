@@ -9,6 +9,7 @@ export default defineConfig({
     vue(),
   ],
   resolve: {
+    //實際的路徑轉換 @ -> src
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
