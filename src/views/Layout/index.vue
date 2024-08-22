@@ -8,7 +8,7 @@ import LayoutFooter from './components/LayoutFooter.vue'
   <LayoutNav />
   <LayoutHeader />
   <!-- <RouterView /> -->
-  <LayoutFooter />
+  <!-- <LayoutFooter /> -->
 </template>
 
 
