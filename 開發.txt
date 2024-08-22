@@ -1,0 +1,7 @@
+# elementPlus引入
+## 1. 安装elementPlus和自动导入插件
+
+npm i elementPlus  // npm install element-plus --save --legacy-peer-deps
+npm install -D unplugin-vue-components unplugin-auto-import
+
+//安裝錯誤，搜尋到的解法 https://wenku.csdn.net/answer/45gmngb29c?ydreferer=aHR0cHM6Ly93d3cuZ29vZ2xlLmNvbS8%3D
