@@ -10,6 +10,7 @@ import {onMounted} from 'vue'
 
 const categoryStore = useCategoryStore()
 
+// 觸發getCategory，才會有state的資料
 onMounted(() => categoryStore.getCategory())
 </script>
 
