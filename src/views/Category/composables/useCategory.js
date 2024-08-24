@@ -18,7 +18,7 @@ export function useCategory(){
 
   // 目標：路由參數變化的時候，可以把分類數據接口重新發送
   onBeforeRouteUpdate((to)=> {
-    console.log('路由變化了')
+    // console.log('路由變化了')
     // 存在問題：使用最新的路由參數請求最新的分類數據
     console.log(to)
     getCategory(to.params.id)
