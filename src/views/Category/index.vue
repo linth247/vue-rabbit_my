@@ -1,42 +1,47 @@
 <script setup>
-import {getCategoryAPI} from '@/apis/category'
-import { ref, onMounted } from 'vue'
-import {useRoute} from 'vue-router'
-import {getBannerAPI} from '@/apis/home'
+// import {getCategoryAPI} from '@/apis/category'
+// import { ref, onMounted } from 'vue'
+// import {useRoute} from 'vue-router'
+// import {getBannerAPI} from '@/apis/home'
 import GoodsItem from '../Home/components/GoodsItem.vue'
-import { onBeforeRouteUpdate } from 'vue-router'
+// import { onBeforeRouteUpdate } from 'vue-router'
+import { useBanner } from './composables/useBanner'
+import { useCategory } from './composables/useCategory'
 
-//獲取數據
-const categoryData = ref([])
-const route = useRoute()
-const getCategory = async(id=route.params.id) =>{
-    // const res = await getCategoryAPI(route.params.id)
-    const res = await getCategoryAPI(id)
-    categoryData.value = res.result
-}
+const { bannerList } = useBanner()
+const { categoryData } = useCategory()
 
-onMounted(() => getCategory())
+// //獲取數據
+// const categoryData = ref([])
+// const route = useRoute()
+// const getCategory = async(id=route.params.id) =>{
+//     // const res = await getCategoryAPI(route.params.id)
+//     const res = await getCategoryAPI(id)
+//     categoryData.value = res.result
+// }
 
-// 目標：路由參數變化的時候，可以把分類數據接口重新發送
-onBeforeRouteUpdate((to)=> {
-  console.log('路由變化了')
-  // 存在問題：使用最新的路由參數請求最新的分類數據
-  console.log(to)
-  getCategory(to.params.id)
-})
+// onMounted(() => getCategory())
+
+// // 目標：路由參數變化的時候，可以把分類數據接口重新發送
+// onBeforeRouteUpdate((to)=> {
+//   console.log('路由變化了')
+//   // 存在問題：使用最新的路由參數請求最新的分類數據
+//   console.log(to)
+//   getCategory(to.params.id)
+// })
 
 // 獲取banner
-const bannerList = ref([])
+// const bannerList = ref([])
 
-const getBanner = async() => {
-	const res = await getBannerAPI({
-		distributionSite: '2'
-	})
-	// console.log(res)
-	bannerList.value = res.result
-}
+// const getBanner = async() => {
+// 	const res = await getBannerAPI({
+// 		distributionSite: '2'
+// 	})
+// 	// console.log(res)
+// 	bannerList.value = res.result
+// }
 
-onMounted(() => getBanner())
+// onMounted(() => getBanner())
 
 
 </script>
