@@ -1,7 +1,7 @@
 <script setup>
 defineProps({
-  goods:{
-    tpye:Object,
+  good:{
+    type:Object,
     default: () => {} // 對象默認值
   }
 })
@@ -9,20 +9,20 @@ defineProps({
 
 <template>
   <RouterLink to="/" class="goods-item">
-    <img v-img-lazy="goods.picture" alt="" />
-    <p class="name ellipsis">{{ goods.name }}</p>
-    <p class="desc ellipsis">{{ goods.desc }}</p>
-    <p class="price">&yen;{{ goods.price }}</p>
+    <img v-img-lazy="good.picture" alt="" />
+    <p class="name ellipsis">{{ good.name }}</p>
+    <p class="desc ellipsis">{{ good.desc }}</p>
+    <p class="price">&yen;{{ good.price }}</p>
   </RouterLink>
 </template>
 
-<style lang="scss">
-    .goods-item {
-      display: block;
-      width: 220px;
-      padding: 20px 30px;
-      text-align: center;
-      transition: all .5s;
+<style scoped lang="scss">
+.goods-item {
+  display: block;
+  width: 220px;
+  padding: 20px 30px;
+  text-align: center;
+  transition: all .5s;
 
       &:hover {
         transform: translate3d(0, -3px, 0);
