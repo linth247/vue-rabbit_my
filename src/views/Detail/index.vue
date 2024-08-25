@@ -1,4 +1,5 @@
 <script setup>
+import DetailHot from "@/views/Detail/components/DetailHot.vue";
 import {getDetail} from '@/apis/detail'
 import {ref, onMounted} from 'vue'
 import {useRoute} from 'vue-router'
@@ -135,7 +136,10 @@ onMounted(() => getGoods() )
             </div>
             <!-- 24熱榜+專題推薦 -->
             <div class="goods-aside">
-
+              <!-- 24小時 -->
+              <DetailHot/>
+              <!-- 周 -->
+              <DetailHot/>
             </div>
           </div>
         </div>
