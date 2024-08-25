@@ -1,17 +1,36 @@
 <script setup>
+import {getDetail} from '@/apis/detail'
+import {ref, onMounted} from 'vue'
+import {useRoute} from 'vue-router'
 
+const route = useRoute()
+const goods = ref({})
+const getGoods = async() =>{
+  const res = await getDetail(route.params.id)
+  goods.value = res.result
+}
 
+onMounted(() => getGoods() )
 </script>
 
 <template>
   <div class="xtx-goods-page">
-    <div class="container">
+    <div class="container" v-if="goods.details">
       <div class="bread-container">
         <el-breadcrumb separator=">">
           <el-breadcrumb-item :to="{ path: '/' }">首頁</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/' }">母嬰
+          <!-- <el-breadcrumb-item :to="{ path: '/' }">母嬰 -->
+            <!--
+               錯誤原因：goods一開始{} {}.categories -> undefined -> undefined[1]
+               1.可選鏈的語法?.
+               2.v-if 手動控憲渲染時機，保證只有數據存在才渲染
+             -->
+          <!-- <el-breadcrumb-item :to="{ path: `/category/${goods.categories?.[1].id}` }">{{ goods.categories?.[1].name }} -->
+          <el-breadcrumb-item :to="{ path: `/category/${goods.categories[1].id}` }">{{ goods.categories[1].name }}
           </el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/' }">跑步鞋
+          <!-- <el-breadcrumb-item :to="{ path: '/' }">跑步鞋 -->
+          <!-- <el-breadcrumb-item :to="{ path: `/category/sub/${goods.categories?.[0].id}` }">{{ goods.categories?.[0].name }} -->
+          <el-breadcrumb-item :to="{ path: `/category/sub/${goods.categories[0].id}` }">{{ goods.categories[0].name }}
           </el-breadcrumb-item>
           <el-breadcrumb-item>抓絨保暖，毛毛蟲子兒童運動鞋</el-breadcrumb-item>
         </el-breadcrumb>
@@ -27,33 +46,41 @@
               <ul class="goods-sales">
                 <li>
                   <p>銷量人氣</p>
-                  <p> 100+ </p>
+                  <!-- <p> 100+ </p> -->
+                  <p> {{ goods.salesCount }}+ </p>
                   <p><i class="iconfont icon-task-filling"></i>銷量人氣</p>
                 </li>
                 <li>
                   <p>商品評價</p>
-                  <p>200+</p>
+                  <!-- <p>200+</p> -->
+                  <p>{{ goods.commentCount }}+</p>
                   <p><i class="iconfont icon-comment-filling"></i>查看評價</p>
                 </li>
                 <li>
                   <p>收藏人氣</p>
-                  <p>300+</p>
+                  <!-- <p>300+</p> -->
+                  <p>{{ goods.collectCount }}+</p>
                   <p><i class="iconfont icon-favorite-filling"></i>收藏商品</p>
                 </li>
                 <li>
                   <p>品牌信息</p>
-                  <p>400+</p>
+                  <!-- <p>400+</p> -->
+                  <p>{{ goods.brand.name }}+</p>
                   <p><i class="iconfont icon-dynamic-filling"></i>品牌主頁</p>
                 </li>
               </ul>
             </div>
             <div class="spec">
               <!-- 商品信息區 -->
-              <p class="g-name"> 抓絨保暖，毛毛蟲子兒童鞋 </p>
-              <p class="g-desc">好穿 </p>
+              <!-- <p class="g-name"> 抓絨保暖，毛毛蟲子兒童鞋 </p>
+              <p class="g-desc">好穿 </p> -->
+              <p class="g-name"> {{ goods.name }} </p>
+              <p class="g-desc">{{ goods.desc }} </p>
               <p class="g-price">
-                <span>200</span>
-                <span> 100</span>
+                <!-- <span>200</span>
+                <span> 100</span> -->
+                <span>{{ goods.oldPrice }}</span>
+                <span> {{ goods.price }}</span>
               </p>
               <div class="g-service">
                 <dl>
@@ -93,13 +120,16 @@
                 <div class="goods-detail">
                   <!-- 属性 -->
                   <ul class="attrs">
-                    <li v-for="item in 3" :key="item.value">
-                      <span class="dt">白色</span>
-                      <span class="dd">純棉</span>
+                    <!-- <li v-for="item in 3" :key="item.value"> -->
+                    <li v-for="item in goods.details.properties" :key="item.value">
+                      <!-- <span class="dt">白色</span>
+                      <span class="dd">純棉</span> -->
+                      <span class="dt">{{ item.name }}</span>
+                      <span class="dd">{{ item.value }}</span>
                     </li>
                   </ul>
                   <!-- 图片 -->
-
+                  <img v-for="img in goods.details.pictures" :src="img" :key="img" alt="">
                 </div>
               </div>
             </div>
