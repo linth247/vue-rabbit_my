@@ -1,4 +1,8 @@
 <script setup>
+import { useUserStore } from '@/stores/user'
+const userStore = useUserStore()
+
+
 
 </script>
 
@@ -7,8 +11,12 @@
     <div class="container">
       <ul>
         <!-- 多模版渲染 區分登入狀態和非登入狀態 -->
-        <template v-if="false">
+
+        <!-- 適配思路：登入時，顯示第一塊  非登入時顯示第二塊   是否有token -->
+        <!-- <template v-if="false"> -->
+        <template v-if="userStore.userInfo.token">
           <!-- <li><a href="javascript:;"><i class="iconfont icon-user"></i>周杰倫</a></li> -->
+          <li><a href="javascript:;"><i class="iconfont icon-user"></i>{{ userStore.userInfo.account }}</a></li>
           <li>
             <el-popconfirm title="確認退出嗎?" confirm-button-text="確認" cancel-button-text="取消">
               <template #reference>
@@ -32,6 +40,7 @@
 
 <style scoped lang="scss">
 .app-topnav {
+  // width: 2048px !important;
   background: #333;
   ul {
     display: flex;
