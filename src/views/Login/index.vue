@@ -3,18 +3,21 @@
 // 表單校驗功能(帳號名+密碼)
 
 import { ref } from 'vue'
-import{ loginAPI } from '@/apis/user'
+// import{ loginAPI } from '@/apis/user'
 //如果使用 unplugin-element-plus 并且只使用组件 API，你需要手动导入样式。
 // import 'element-plus/es/components/message/style/css'
 import { ElMessage } from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
 import {useRouter} from 'vue-router'
 
+import { useUserStore } from '@/stores/user'
+
+const userStore = useUserStore()
 
 //1.準備表單對象
 const form = ref({
-  account:'',
-  password:'',
+  account:'13123456789',
+  password:'123456',
   agree: true
 })
 
@@ -57,8 +60,9 @@ const doLogin = () => {
     // 以valid做為判斷條件 如果通過校驗才執行登入邏輯
     if(valid){
       // TODO LOGIN
-      const res = await loginAPI({account, password})
-      console.log(res)
+      // const res = await loginAPI({account, password})
+      // console.log(res)
+      await userStore.getUserInfo({account, password})
       // 1.提示用戶
       ElMessage({type:'success', message:'登入成功'})
       // 2.跳轉首頁
