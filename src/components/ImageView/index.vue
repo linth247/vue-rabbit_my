@@ -30,7 +30,9 @@ const positionY = ref(0)
 
 watch([elementX, elementY], () => {
   // 如果鼠標沒有移入到盒子裡面 直接不執行後面的邏輯
-  if (isOutside.value) return
+  if (isOutside.value) {
+    return
+  }
   console.log('xy變化了')
   // 有效範圍內，控制滑塊距離
   // 横向
@@ -58,7 +60,7 @@ watch([elementX, elementY], () => {
 
 
 <template>
-   {{ elementX }}, {{elementY}}, {{isOutside }}
+   <!-- {{ elementX }}, {{elementY}}, {{isOutside }} -->
   <div class="goods-image">
     <!-- 左側大圖-->
     <div class="middle" ref="target">
@@ -74,10 +76,11 @@ watch([elementX, elementY], () => {
         <img :src="img" alt="" />
       </li>
     </ul>
-    <!-- 放大镜大图 -->
+    <!-- 放大鏡大圖 -->
     <div class="large" :style="[
       {
-        backgroundImage: `url(${imageList[0]})`,
+        // backgroundImage: `url(${imageList[0]})`,
+        backgroundImage: `url(${imageList[activeIndex]})`,
         backgroundPositionX: `${positionX}px`,
         backgroundPositionY: `${positionY}px`,
       },
