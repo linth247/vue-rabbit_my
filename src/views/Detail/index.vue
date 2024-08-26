@@ -1,7 +1,7 @@
 <script setup>
 import DetailHot from "@/views/Detail/components/DetailHot.vue";
-import ImageView from '@/components/ImageView/index.vue'
-import XtxSku from '@/components/XtxSku/index.vue'
+// import ImageView from '@/components/ImageView/index.vue'
+// import XtxSku from '@/components/XtxSku/index.vue'
 import {getDetail} from '@/apis/detail'
 import {ref, onMounted} from 'vue'
 import {useRoute} from 'vue-router'
@@ -31,7 +31,7 @@ const skuChange = (sku) => {
             <!--
                錯誤原因：goods一開始{} {}.categories -> undefined -> undefined[1]
                1.可選鏈的語法?.
-               2.v-if 手動控憲渲染時機，保證只有數據存在才渲染
+               2.v-if 手動控制渲染時機，保證只有數據存在才渲染
              -->
           <!-- <el-breadcrumb-item :to="{ path: `/category/${goods.categories?.[1].id}` }">{{ goods.categories?.[1].name }} -->
           <el-breadcrumb-item :to="{ path: `/category/${goods.categories[1].id}` }">{{ goods.categories[1].name }}
@@ -50,7 +50,8 @@ const skuChange = (sku) => {
             <div class="media">
               <!-- 圖片預覽區 -->
                <!-- <ImageView :imageList=""/>  -->
-               <ImageView :image-list="goods.mainPictures"/> 
+               <!-- <ImageView :image-list="goods.mainPictures"/>  -->
+               <XtxImageView :image-list="goods.mainPictures"/> 
               <!-- 統計數量 -->
               <ul class="goods-sales">
                 <li>
