@@ -25,7 +25,7 @@ export const useCartStore = defineStore('cart', () => {
     cartList,
     addCart
   }
-    },
-    {
-        persist: true,  // 持久化到localStorage
-    });
+},
+{
+  persist: true,  // 持久化到localStorage
+});
