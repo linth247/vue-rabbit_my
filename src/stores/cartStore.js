@@ -7,6 +7,7 @@ import { insertCartAPI, findNewCartListAPI, delCartAPI } from '@/apis/cart'
 
 
 export const useCartStore = defineStore('cart', () => {
+  // 一定要在回調函數裡面調用，才能保證拿到訊息
   const userStore = useUserStore()
   const isLogin = computed(()=>userStore.userInfo.token)
 
@@ -69,6 +70,10 @@ export const useCartStore = defineStore('cart', () => {
   }
 
 
+  // 清除購物車
+  const clearCart = () => {
+    cartList.value = []
+  }
 
 
   // 單選功能
@@ -104,6 +109,7 @@ export const useCartStore = defineStore('cart', () => {
     isAll,
     selectedCount,
     selectedPrice,
+    clearCart,
     addCart,
     delCart,
     singleCheck,
