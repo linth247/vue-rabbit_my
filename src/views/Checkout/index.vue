@@ -1,12 +1,12 @@
 <script setup>
 
-import { getCheckInfoAPI } from '@/apis/checkout'
+import { getCheckoutInfoAPI } from '@/apis/checkout'
 import { ref, onMounted } from 'vue'
 
 const checkInfo = ref({})  // 訂單對象
 const curAddress = ref({}) // 地址對象
 const getCheckInfo = async() =>{
-  const res = await getCheckInfoAPI()
+  const res = await getCheckoutInfoAPI()
   checkInfo.value = res.result
   // 適配默認地址
   // 從地址列表中篩選出來 isDefault === 0 那一項
@@ -15,7 +15,8 @@ const getCheckInfo = async() =>{
 }
 onMounted(() => getCheckInfo())
 
-
+// 控制彈框打開
+const showDialog = ref(false)
 
 
 </script>
@@ -37,7 +38,7 @@ onMounted(() => getCheckInfo())
               </ul>
             </div>
             <div class="action">
-              <el-button size="large" @click="toggleFlag = true">切換地址</el-button>
+              <el-button size="large" @click="showDialog = true">切換地址</el-button>
               <el-button size="large" @click="addFlag = true">添加地址</el-button>
             </div>
           </div>
@@ -117,7 +118,24 @@ onMounted(() => getCheckInfo())
       </div>
     </div>
   </div>
-  <!-- 切换地址 -->
+  <!-- 切換地址 -->
+  <el-dialog v-model="showDialog" title="切換貨地址" width="30%" center>
+    <div class="addressWrapper">
+    <div class="text item" v-for="item in checkInfo.userAddresses"  :key="item.id">
+      <ul>
+      <li><span>收<i />貨<i />人：</span>{{ item.receiver }} </li>
+      <li><span>聯絡方式：</span>{{ item.contact }}</li>
+      <li><span>收貨地址：</span>{{ item.fullLocation + item.address }}</li>
+      </ul>
+    </div>
+  </div>
+  <template #footer>
+    <span class="dialog-footer">
+      <el-button>取消</el-button>
+      <el-button type="primary">確定</el-button>
+    </span>
+  </template>
+</el-dialog>
   <!-- 添加地址 -->
 </template>
 
