@@ -2,8 +2,8 @@
 
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { useUserStore } from './user'
-import { insertCartAPI, findNewCartListAPI } from '@/apis/cart'
+import { useUserStore } from './userStore'
+import { insertCartAPI, findNewCartListAPI, delCartAPI } from '@/apis/cart'
 
 
 export const useCartStore = defineStore('cart', () => {
@@ -12,17 +12,25 @@ export const useCartStore = defineStore('cart', () => {
 
   //1.定義state - cartList
   const cartList = ref([])
+  
+  // 獲取最新購物車列表action
+  const updateNewList = async() =>{
+    const res = await findNewCartListAPI()
+    cartList.value = res.result
+  }
+  
   //2.定義action - addCart
   const addCart = async(goods) => {
     const { skuId, count } = goods
     if(isLogin.value){
       // 登入之後的加入購物車邏輯
-      // 1.調用加入購物車擒口
+      // 1.調用加入購物車接口
       // 2.調用獲取購物車列表接口
       // 3.用接口購物車列表覆蓋本地購物車列表
       await insertCartAPI({ skuId, count})
-      const res = await findNewCartListAPI()
-      cartList.value = res.result
+      // const res = await findNewCartListAPI()
+      // cartList.value = res.result
+      updateNewList()
     }else{
       // 添加購物車操作
       // 已添加過 - count + 1
@@ -41,13 +49,27 @@ export const useCartStore = defineStore('cart', () => {
   }
 
   // 刪除購物車
-  const delCart = (skuId) => {
-    // 思路：
-    // 1.找到要刪除項的下標值 - splice
-    // 2.使用數組的過濾方法 - filter
-    const idx = cartList.value.findIndex((item)=> skuId === item.skuId)
-    cartList.value.splice(idx, 1)
+  const delCart = async(skuId) => {
+    if(isLogin.value){
+      // 調用接口實現接口購物車中的刪除功能
+      // 1.調用刪除購物車接口
+      // 2.調用獲取購物車列表接口
+      // 3.用接口購物車列表覆蓋本地購物車列表
+      await delCartAPI([skuId])
+      // const res = await findNewCartListAPI()
+      // cartList.value = res.result
+      updateNewList()
+    }else{
+      // 思路：
+      // 1.找到要刪除項的下標值 - splice
+      // 2.使用數組的過濾方法 - filter
+      const idx = cartList.value.findIndex((item)=> skuId === item.skuId)
+      cartList.value.splice(idx, 1)
+    }
   }
+
+
+
 
   // 單選功能
   const singleCheck = (skuId, selected) =>{
