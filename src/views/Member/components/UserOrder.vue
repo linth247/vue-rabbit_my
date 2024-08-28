@@ -34,17 +34,30 @@ onMounted(() => getOrderList())
 
 // tab切換
 const tabChange = (type) =>{
-  console.log(type)
+  //console.log(type)
   params.value.orderState = type // 先修改
   getOrderList() // 再去調用，就是最新的數據了
 }
 
 // 頁數切換
 const pageChange = (page) => {
-  console.log(page)
+  //console.log(page)
   params.value.page = page
   getOrderList()
 }
+
+  // 創建格式化函數
+  const fomartPayState = (payState) => {
+    const stateMap = {
+      1: '待付款',
+      2: '待發貨',
+      3: '待收貨',
+      4: '待評價',
+      5: '已完成',
+      6: '已取消'
+    }
+    return stateMap[payState]
+  }
 
 </script>
 
@@ -91,7 +104,7 @@ const pageChange = (page) => {
                 </ul>
               </div>
               <div class="column state">
-                <p>{{ order.orderState }}</p>
+                <p>{{ fomartPayState(order.orderState) }}</p>
                 <p v-if="order.orderState === 3">
                   <a href="javascript:;" class="green">查看物流</a>
                 </p>
@@ -128,7 +141,7 @@ const pageChange = (page) => {
           </div>
           <!-- 分頁 -->
           <div class="pagination-container">
-            <el-pagination :total="total" @current-change="pageChange" :bage-size="params.pageSize" background layout="prev, pager, next" />
+            <el-pagination :total="total" @current-change="pageChange" :page-size="params.pageSize" background layout="prev, pager, next" />
           </div>
         </div>
       </div>
