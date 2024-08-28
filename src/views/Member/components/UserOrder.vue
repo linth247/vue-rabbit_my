@@ -17,6 +17,7 @@ const tabTypes = [
 ]
 // 訂單列表
 const orderList = ref([])
+const total = ref(0)
 const params = ref({
   orderState:0,
   page:1,
@@ -26,6 +27,7 @@ const getOrderList = async() => {
   const res = await getUserOrder(params.value)
   // console.log(res.result)
   orderList.value = res.result.items
+  total.value = res.result.counts
 }
 
 onMounted(() => getOrderList())
@@ -35,6 +37,13 @@ const tabChange = (type) =>{
   console.log(type)
   params.value.orderState = type // 先修改
   getOrderList() // 再去調用，就是最新的數據了
+}
+
+// 頁數切換
+const pageChange = (page) => {
+  console.log(page)
+  params.value.page = page
+  getOrderList()
 }
 
 </script>
@@ -111,7 +120,7 @@ const tabChange = (type) =>{
                   <a href="javascript:;">再次購買</a>
                 </p>
                 <p v-if="[4, 5].includes(order.orderState)">
-                  <a href="javascript:;">申悄售後</a>
+                  <a href="javascript:;">申請售後</a>
                 </p>
                 <p v-if="order.orderState === 1"><a href="javascript:;">取消訂單</a></p>
               </div>
@@ -119,7 +128,7 @@ const tabChange = (type) =>{
           </div>
           <!-- 分頁 -->
           <div class="pagination-container">
-            <el-pagination background layout="prev, pager, next" />
+            <el-pagination :total="total" @current-change="pageChange" :bage-size="params.pageSize" background layout="prev, pager, next" />
           </div>
         </div>
       </div>
