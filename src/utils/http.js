@@ -17,6 +17,7 @@ httpInstance.interceptors.request.use(config => {
 	const userStore = useUserStore()
 	//2.按照後端的要求拼接token數據
 	const token = userStore.userInfo.token
+	// console.log(token)
 	if(token){
 		config.headers.Authorization = `Bearer ${token}`
 	}
