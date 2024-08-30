@@ -15,6 +15,7 @@ import PayBack from '@/views/Pay/PayBack.vue'
 import Member from '@/views/Member/index.vue'
 import UserInfo from '@/views/Member/components/UserInfo.vue'
 import UserOrder from '@/views/Member/components/UserOrder.vue'
+import Demo from '@/views/Demo/index.vue'
 
 
 const router = createRouter({
@@ -56,6 +57,10 @@ const router = createRouter({
         {
           path:'paycallback',
           component: PayBack
+        },
+        {
+          path:'demo',
+          component: Demo
         },
         {
           path:'member',
